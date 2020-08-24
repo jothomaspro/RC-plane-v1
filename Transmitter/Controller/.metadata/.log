@@ -1,0 +1,83 @@
+!SESSION 2020-08-24 18:26:20.400 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=1.8.0_261
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=fr_CH
+Framework arguments:  -product org.eclipse.epp.package.cpp.product C:/Users/jthom/OneDrive/Root/Personal/Projets/Plane/RC-plane-v1/.git/COMMIT_EDITMSG
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product C:/Users/jthom/OneDrive/Root/Personal/Projets/Plane/RC-plane-v1/.git/COMMIT_EDITMSG
+
+!ENTRY org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.750
+!MESSAGE Cannot complete the install because some dependencies are not satisfiable
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE Software being installed: a.jre.javase 10.0.0
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE Software currently installed: C/C++ Autotools support 9.11.1.202004012023 (org.eclipse.cdt.autotools.feature.group 9.11.1.202004012023)
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.750
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE From: C/C++ Autotools support 9.11.1.202004012023 (org.eclipse.cdt.autotools.feature.group 9.11.1.202004012023)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.tools.templates.freemarker.java11 [1.1.100.202001140305,1.1.100.202001140305]
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.750
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE From: Template Engine Freemarker Support (Java 11) 1.1.100.202001140305 (org.eclipse.tools.templates.freemarker.java11 1.1.100.202001140305)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.750
+!MESSAGE To: osgi.ee; (&(osgi.ee=JavaSE)(version=11))
+
+!ENTRY org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.793
+!MESSAGE Cannot complete the install because some dependencies are not satisfiable
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.793
+!MESSAGE Software being installed: a.jre.javase 10.0.0
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.794
+!MESSAGE Software currently installed: C/C++ Autotools support 9.11.1.202004012023 (org.eclipse.cdt.autotools.feature.group 9.11.1.202004012023)
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.794
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.794
+!MESSAGE From: C/C++ Autotools support 9.11.1.202004012023 (org.eclipse.cdt.autotools.feature.group 9.11.1.202004012023)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.794
+!MESSAGE To: org.eclipse.equinox.p2.iu; org.eclipse.tools.templates.freemarker.java11 [1.1.100.202001140305,1.1.100.202001140305]
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2020-08-24 18:28:26.794
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.794
+!MESSAGE From: Template Engine Freemarker Support (Java 11) 1.1.100.202001140305 (org.eclipse.tools.templates.freemarker.java11 1.1.100.202001140305)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2020-08-24 18:28:26.794
+!MESSAGE To: osgi.ee; (&(osgi.ee=JavaSE)(version=11))
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.591
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.doc.user_5.4.401.202004012023 [122]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.613
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.tracecompass.gdbtrace.doc.user_6.0.0.202006101914 [485]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.637
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.autotools.docs_2.0.401.202004012023 [93]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.663
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.tracecompass.doc.user_6.0.0.202006101914 [483]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.687
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.platform.doc.user_4.16.0.v20200603-1002 [429]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.707
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.meson.docs_1.0.401.202004012023 [140]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.731
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.debug.application.doc_1.1.501.202004012023 [111]'. The index should be rebuilt with Lucene 8.4.1
+
+!ENTRY org.eclipse.help.base 2 0 2020-08-24 18:30:16.750
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.tracecompass.doc.dev_6.0.0.202006101914 [482]'. The index should be rebuilt with Lucene 8.4.1
+!SESSION 2020-08-24 18:40:23.895 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=1.8.0_261
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=fr_CH
+Framework arguments:  -product org.eclipse.epp.package.cpp.product C:\Users\jthom\OneDrive\Root\Personal\Projets\Plane\RC-plane-v1\Transmitter\Controller\LoRaRadio.cpp
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product C:\Users\jthom\OneDrive\Root\Personal\Projets\Plane\RC-plane-v1\Transmitter\Controller\LoRaRadio.cpp
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-08-24 18:40:42.338
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\jthom'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

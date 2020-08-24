@@ -39,3 +39,5 @@ bool LoRaRadio::sendCommand(uint8_t motorSpeed, uint8_t aeleronR, uint8_t aelero
 	LoRa.write(aeleronL);
 	return LoRa.endPacket();
 }
+
+bool LoRaRadio::receiveCommand();

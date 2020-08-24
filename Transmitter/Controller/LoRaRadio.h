@@ -17,6 +17,7 @@ public:
 	bool begin(long freq = 433E6);
 	bool sendMessage(String message);
 	bool sendCommand(uint8_t motorSpeed, uint8_t aeleronR, uint8_t aeleronL, byte destination = _destination);
+  bool receiveCommand();
 private:
 	byte _localAddress;
 	byte _destination;
