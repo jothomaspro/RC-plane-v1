@@ -1,0 +1,20 @@
+/*
+ * LoRaRadio.cpp
+ *
+ *  Created on: 23 ao�t 2020
+ *      Author: jthom
+ */
+
+#include "LoRaRadio.h"
+
+LoRaRadio::LoRaRadio(uint8_t csPin, uint8_t rstPin, uint8_t irqPin, byte localAddress, byte destination)
+: _localAddress(localAddress), _destination(destination)
+{
+	LoRa.setPins(csPin, rstPin, irqPin);
+}
+
+void LoRaRadio::begin(long freq){
+	if (!LoRa.begin(freq)) {             // initialize ratio at 915 MHz
+	Serial.println("LoRa init failed. Check your connections.");
+	}
+}

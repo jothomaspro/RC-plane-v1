@@ -1,0 +1,18 @@
+/*
+ * Command.h
+ *
+ *  Created on: 23 août 2020
+ *      Author: jthom
+ */
+#ifndef COMMAND
+#define COMMAND
+
+Union Command{
+	uint8_t d;
+	float f
+}
+
+#endif
+
+
+

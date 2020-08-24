@@ -1,0 +1,63 @@
+LORA
+38-41
+
+Rotary potentionmeter
+1 Analogue pin
+
+Slide potentiometer
+1-2 Analogue pins
+
+Joysticks
+2x2 Analogue pins in middles
+1x2 Digital pins?
+
+Toggle switch
+2 Digital pins on extremities
+
+Joystick 1
+V+	3.3v
+V	B1
+V-	GND
+H+	3.3v
+H	B0
+H-	GND
+SEL+	3.3v
+SEL-	A5
+
+Joystick 2
+V+	3.3v
+V	A7
+V-	GND
+H+	3.3v
+H	A6
+H-	GND
+SEL+	3.3v
+SEL-	A4
+
+LORA
+SCK	B13
+MISO	B14
+MOSI	B15
+CS	B12
+DIO0	A11
+RST	A12
+
+Toggle switch
+1	A9
+2	3.3v
+3	A10
+
+Slide potentiometer
+VCC	3.3v
+OTA	A3
+GND	GND
+
+Rotary potentiometer
+VCC	3.3v
+2	A2
+
+MPU6050
+VCC	3.3v
+GND	GND
+SCL	B10
+SDA	B11

@@ -1,0 +1,15 @@
+#ifndef POTENTIOMETER
+#define POTENTIOMETER
+
+class Potentiometer{
+public:
+	uint8_t _pin;
+	Potentiometer(uint8_t pin = PA3) : _pin(pin){
+	  pinMode(pin, INPUT_PULLUP);
+	}
+	uint16_t getVoltage(){
+		analogRead(_pin);
+	}
+};
+
+#endif 
