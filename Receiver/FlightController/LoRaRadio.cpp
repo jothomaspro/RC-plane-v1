@@ -59,3 +59,7 @@ Packet LoRaRadio::receiveCommand(){
   p.aeleronL = LoRa.read();
   return p;
 }
+
+#ifdef LORAINT
+//LoRa::LoRa.onReceive(receiveCommand); What to do?
+#endif
