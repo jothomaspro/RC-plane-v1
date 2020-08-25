@@ -18,6 +18,7 @@ bool LoRaRadio::begin(long freq){
 	Serial.println("LoRa init failed. Check your connections.");
 	return false;
 	}
+  Serial.println("LoRa Tx online.");
 	return true;
 }
 

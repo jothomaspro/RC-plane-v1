@@ -18,6 +18,7 @@ bool LoRaRadio::begin(long freq){
 	Serial.println("LoRa init failed. Check your connections.");
 	return false;
 	}
+  Serial.println("LoRa Rx online."
 	return true;
 }
 
@@ -40,7 +41,7 @@ bool LoRaRadio::sendCommand(Packet p){
 	return LoRa.endPacket();
 }
 
-Packet LoRaRadio::receiveCommand(){
+void LoRaRadio::receiveCommand(int i){
   uint8_t header = LoRa.read();
   uint8_t sender = header & 0b00001111;
   uint8_t target = header >> 4;
@@ -57,7 +58,10 @@ Packet LoRaRadio::receiveCommand(){
   p.motorSpeed = LoRa.read();
   p.aeleronR = LoRa.read();
   p.aeleronL = LoRa.read();
-  return p;
+  //return p;
+}
+
+void LoRaRadio::onReceive(void(*callback)(int)){
 }
 
 #ifdef LORAINT
