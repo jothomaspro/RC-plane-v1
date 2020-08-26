@@ -3,9 +3,9 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 
-Potentiometer throttle(PA3);
-Joystick aeleron(PB0, PB1, PA5);
-LoRaRadio lora(PB12, PA12, PA11, 0b0100, 0b0110);
+Potentiometer throttle(PB0);
+Joystick aeleron(PA2, PA1, PC14);
+LoRaRadio lora(PB1, PA12, PA11, 0b0100, 0b0110);
 Packet oldPacket;
 Packet currentPacket;
 
@@ -27,9 +27,16 @@ void loop() {
   currentPacket.aeleronL = aeleron.getPwmValueY();
   
   if(oldPacket != currentPacket){
+    Serial.println(toString(currentPacket));
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
   }
 }
 
-void buttonIrq(){}
+void buttonIrq(){
+  Serial.println("INT button");  
+}
+
+String toString(Packet p){
+  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L:" + (String)p.aeleronL; 
+}
