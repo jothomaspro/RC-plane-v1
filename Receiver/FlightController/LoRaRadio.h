@@ -18,11 +18,14 @@ public:
 	bool begin(long freq = 433E6);
 	bool sendMessage(String message);
 	bool sendCommand(Packet p);
-  void receiveCommand(int i);
+  Packet receiveCommand();
   void onReceive(void(*callback)(int));
 private:
 	byte _localAddress;
 	byte _destination;
+  uint8_t _csPin;
+  uint8_t _rstPin;
+  uint8_t _irqPin;
 };
 
 #endif

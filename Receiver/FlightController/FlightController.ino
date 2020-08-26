@@ -1,36 +1,31 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 
-LoRaRadio lora(PB12, PA9, PA8, 0b0110, 0b0100);
+LoRaRadio lora(PA3, PA2, PA1, 0b0110, 0b0100);
 
 void setup() {
-  // put your setup code here, to run once:
+  // put your setup code here, to run once
+  pinMode(PC13, OUTPUT);
+  digitalWrite(PC13, LOW);
+  delay(3000);
+  digitalWrite(PC13, HIGH);
   Serial.begin(9600);
-  lora.begin();
+  Serial.println("Initialising...."); 
   
+  lora.begin();
   LoRa.onReceive(receiveCommand);
 }
+
 
 void loop() {
   // put your main code here, to run repeatedly:
 }
 
 void receiveCommand(int i){
-  uint8_t header = LoRa.read();
-  uint8_t sender = header & 0b00001111;
-  uint8_t target = header >> 4;
-  Serial.print("Sender: ");
-  Serial.print(sender);
-  Serial.print(" -- Destination:");
-  Serial.print(0b0100);
-  Serial.print("Target: ");
-  Serial.print(target);
-  Serial.print(" -- Local Address:");
-  Serial.print(0b0110);
+  Packet p = lora.receiveCommand();
+  Serial.println(toString(p));
+}
 
-  Packet p;
-  p.motorSpeed = LoRa.read();
-  p.aeleronR = LoRa.read();
-  p.aeleronL = LoRa.read();
-  //return p;
+String toString(Packet p){
+  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L:" + (String)p.aeleronL; 
 }

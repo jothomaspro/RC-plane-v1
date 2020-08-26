@@ -8,17 +8,16 @@
 #include "LoRaRadio.h"
 
 LoRaRadio::LoRaRadio(uint8_t csPin, uint8_t rstPin, uint8_t irqPin, byte destination, byte localAddress)
-: _localAddress(localAddress), _destination(destination)
-{
-	LoRa.setPins(csPin, rstPin, irqPin);
-}
+: _csPin(csPin), _rstPin(rstPin), _irqPin(irqPin), _localAddress(localAddress), _destination(destination) {}
 
 bool LoRaRadio::begin(long freq){
+  LoRa.setPins(_csPin, _rstPin, _irqPin);
+  
 	if (!LoRa.begin(freq)) {             // initialize ratio at 915 MHz
 	Serial.println("LoRa init failed. Check your connections.");
 	return false;
 	}
-  Serial.println("LoRa Rx online."
+  Serial.println("LoRa Rx online.");
 	return true;
 }
 
@@ -41,7 +40,7 @@ bool LoRaRadio::sendCommand(Packet p){
 	return LoRa.endPacket();
 }
 
-void LoRaRadio::receiveCommand(int i){
+Packet LoRaRadio::receiveCommand(){
   uint8_t header = LoRa.read();
   uint8_t sender = header & 0b00001111;
   uint8_t target = header >> 4;
@@ -58,7 +57,7 @@ void LoRaRadio::receiveCommand(int i){
   p.motorSpeed = LoRa.read();
   p.aeleronR = LoRa.read();
   p.aeleronL = LoRa.read();
-  //return p;
+  return p;
 }
 
 void LoRaRadio::onReceive(void(*callback)(int)){
