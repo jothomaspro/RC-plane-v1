@@ -3,9 +3,9 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 
-Potentiometer throttle(PB0);
-Joystick aeleron(PA2, PA1, PC14);
-LoRaRadio lora(PB1, PA12, PA11, 0b0100, 0b0110);
+Potentiometer throttle(A0);
+Joystick aeleron(A2, A3, 2);
+LoRaRadio lora(7, 6, 3, 0b0100, 0b0110);
 Packet oldPacket;
 Packet currentPacket;
 
@@ -14,7 +14,6 @@ void setup() {
   Serial.begin(9600);
   lora.begin(433E6);
   //attachInterrupt(digitalPinToInterrupt(aeleron.getButton()), buttonIrq, CHANGE);
-  pinMode(PC13, OUTPUT);
   oldPacket.motorSpeed = throttle.getPwmValue();
   oldPacket.aeleronR = aeleron.getPwmValueX();
   oldPacket.aeleronL = aeleron.getPwmValueY();
@@ -22,19 +21,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(PC13, HIGH);
   currentPacket.motorSpeed = throttle.getPwmValue();
   currentPacket.aeleronR = aeleron.getPwmValueX();
   currentPacket.aeleronL = aeleron.getPwmValueY();
   
-  //if(oldPacket != currentPacket){
-    
+  if(difference(oldPacket, currentPacket) > 2){
     Serial.println(toString(currentPacket));
-    if(lora.sendCommand(currentPacket)) digitalWrite(PC13, LOW);
-    
-    //oldPacket = currentPacket;
-  //}
-  delay(2000);
+    lora.sendCommand(currentPacket);
+    oldPacket = currentPacket;
+  }
+  delay(500);
 }
 
 /*void buttonIrq(){
@@ -42,5 +38,5 @@ void loop() {
 }*/
 
 String toString(Packet p){
-  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L:" + (String)p.aeleronL; 
+  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L: " + (String)p.aeleronL; 
 }

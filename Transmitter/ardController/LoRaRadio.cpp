@@ -18,7 +18,7 @@ bool LoRaRadio::begin(long freq){
 	Serial.println("LoRa init failed. Check your connections.");
 	return false;
 	}
-  Serial.println("LoRa Tx online.");
+  //Serial.println("LoRa Tx online.");
 	return true;
 }
 
@@ -32,14 +32,12 @@ bool LoRaRadio::sendMessage(String message){
 }
 
 bool LoRaRadio::sendCommand(Packet p){
-  digitalWrite(PC13, LOW);
 	byte header = (_destination << 4) + _localAddress;
 	LoRa.beginPacket();
 	LoRa.write(header);
 	LoRa.write(p.motorSpeed);
 	LoRa.write(p.aeleronR);
 	LoRa.write(p.aeleronL);
-  digitalWrite(PC13, HIGH);
 	return LoRa.endPacket();
 }
 

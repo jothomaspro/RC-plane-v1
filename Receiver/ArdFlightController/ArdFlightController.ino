@@ -1,13 +1,14 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 
-LoRaRadio lora(PA3, PA2, PA1, 0b0110, 0b0100);
+LoRaRadio lora(7, 6, 3, 0b0110, 0b0100);
 
 void setup() {
   // put your setup code here, to run once
   Serial.begin(9600);
-  Serial.println("Initialising...."); 
+  
   lora.begin();
+  LoRa.receive();
   LoRa.onReceive(receiveCommand);
 }
 
@@ -22,5 +23,5 @@ void receiveCommand(int i){
 }
 
 String toString(Packet p){
-  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L:" + (String)p.aeleronL; 
+  return " Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L: " + (String)p.aeleronL; 
 }

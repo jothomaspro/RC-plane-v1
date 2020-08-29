@@ -8,17 +8,16 @@
 #include "LoRaRadio.h"
 
 LoRaRadio::LoRaRadio(uint8_t csPin, uint8_t rstPin, uint8_t irqPin, byte destination, byte localAddress)
-: _localAddress(localAddress), _destination(destination)
-{
-	LoRa.setPins(csPin, rstPin, irqPin);
-}
+: _csPin(csPin), _rstPin(rstPin), _irqPin(irqPin), _localAddress(localAddress), _destination(destination) {}
 
 bool LoRaRadio::begin(long freq){
-	if (!LoRa.begin(freq)) {             
+  LoRa.setPins(_csPin, _rstPin, _irqPin);
+  
+	if (!LoRa.begin(freq)) {             // initialize ratio at 915 MHz
 	Serial.println("LoRa init failed. Check your connections.");
 	return false;
 	}
-  Serial.println("LoRa Tx online.");
+  //Serial.println("LoRa Rx online.");
 	return true;
 }
 
@@ -32,14 +31,12 @@ bool LoRaRadio::sendMessage(String message){
 }
 
 bool LoRaRadio::sendCommand(Packet p){
-  digitalWrite(PC13, LOW);
 	byte header = (_destination << 4) + _localAddress;
 	LoRa.beginPacket();
 	LoRa.write(header);
 	LoRa.write(p.motorSpeed);
 	LoRa.write(p.aeleronR);
 	LoRa.write(p.aeleronL);
-  digitalWrite(PC13, HIGH);
 	return LoRa.endPacket();
 }
 
@@ -47,14 +44,16 @@ Packet LoRaRadio::receiveCommand(){
   uint8_t header = LoRa.read();
   uint8_t sender = header & 0b00001111;
   uint8_t target = header >> 4;
-  Serial.print("Sender: ");
-  Serial.print(sender);
-  Serial.print(" -- Destination: ");
-  Serial.print(this->_destination);
-  Serial.print("Target: ");
-  Serial.print(target);
-  Serial.print(" -- Local Address: ");
-  Serial.print(this->_localAddress);
+  Serial.print("RSSI: ");
+  Serial.print(LoRa.packetRssi());
+  Serial.print(" Sender: ");
+  Serial.print(sender, HEX);
+  Serial.print(" Destination: ");
+  Serial.print(this->_destination, HEX);
+  Serial.print(" Target: ");
+  Serial.print(target, HEX);
+  Serial.print(" Local Address: ");
+  Serial.print(this->_localAddress, HEX);
 
   Packet p;
   p.motorSpeed = LoRa.read();
@@ -62,3 +61,10 @@ Packet LoRaRadio::receiveCommand(){
   p.aeleronL = LoRa.read();
   return p;
 }
+
+void LoRaRadio::onReceive(void(*callback)(int)){
+}
+
+#ifdef LORAINT
+//LoRa::LoRa.onReceive(receiveCommand); What to do?
+#endif
