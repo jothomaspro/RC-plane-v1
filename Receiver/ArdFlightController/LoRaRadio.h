@@ -20,6 +20,7 @@ public:
 	bool sendCommand(Packet p);
   Packet receiveCommand();
   void onReceive(void(*callback)(int));
+  void printHeaderCompare(uint8_t& header);
 private:
 	byte _localAddress;
 	byte _destination;

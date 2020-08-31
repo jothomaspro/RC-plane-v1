@@ -9,9 +9,9 @@
 #define PACKET
 
 struct Packet{
-	uint8_t motorSpeed;
-	uint8_t aeleronR;
-	uint8_t aeleronL;
+	uint16_t motorSpeed;
+	uint16_t aeleronR;
+	uint16_t aeleronL;
 };
 
 inline bool operator!=(Packet p1, Packet p2){
@@ -19,7 +19,7 @@ inline bool operator!=(Packet p1, Packet p2){
   return true;
 }
 
-inline uint8_t difference(Packet p1, Packet p2){
+inline uint16_t difference(Packet p1, Packet p2){
   return abs(p1.motorSpeed - p2.motorSpeed) + abs(p1.aeleronR - p2.aeleronR) + abs(p1.aeleronL - p2.aeleronL);
 }
 

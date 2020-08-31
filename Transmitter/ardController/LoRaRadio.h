@@ -17,6 +17,7 @@ public:
 	bool begin(long freq = (long)433E6);
 	bool sendMessage(String message);
 	bool sendCommand(Packet p);
+  bool sendMotorSpeed(Packet p);
   Packet receiveCommand();
 private:
 	byte _localAddress;

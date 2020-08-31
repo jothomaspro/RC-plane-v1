@@ -14,18 +14,18 @@ void setup() {
   Serial.begin(9600);
   lora.begin(433E6);
   //attachInterrupt(digitalPinToInterrupt(aeleron.getButton()), buttonIrq, CHANGE);
-  oldPacket.motorSpeed = throttle.getPwmValue();
-  oldPacket.aeleronR = aeleron.getPwmValueX();
-  oldPacket.aeleronL = aeleron.getPwmValueY();
+  oldPacket.motorSpeed = throttle.getVoltage();
+  oldPacket.aeleronR = aeleron.getX();
+  oldPacket.aeleronL = aeleron.getY();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  currentPacket.motorSpeed = throttle.getPwmValue();
-  currentPacket.aeleronR = aeleron.getPwmValueX();
-  currentPacket.aeleronL = aeleron.getPwmValueY();
+  currentPacket.motorSpeed = throttle.getVoltage();
+  currentPacket.aeleronR = aeleron.getX();
+  currentPacket.aeleronL = 300;
   
-  if(difference(oldPacket, currentPacket) > 2){
+  if(difference(oldPacket, currentPacket) > 5){
     Serial.println(toString(currentPacket));
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
@@ -38,5 +38,5 @@ void loop() {
 }*/
 
 String toString(Packet p){
-  return "Motor Speed: " + (String)p.motorSpeed + " Aeleron R: " + (String)p.aeleronR + " Aeleron L: " + (String)p.aeleronL; 
+  return "Motor : " + (String)p.motorSpeed + " Aeleronr: " + (String)p.aeleronR + " Aeleronl: " + (String)p.aeleronL; 
 }

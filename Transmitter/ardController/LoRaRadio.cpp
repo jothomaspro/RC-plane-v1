@@ -32,13 +32,24 @@ bool LoRaRadio::sendMessage(String message){
 }
 
 bool LoRaRadio::sendCommand(Packet p){
-	byte header = (_destination << 4) + _localAddress;
+	byte header = (_destination << 4) | _localAddress;
 	LoRa.beginPacket();
 	LoRa.write(header);
-	LoRa.write(p.motorSpeed);
-	LoRa.write(p.aeleronR);
-	LoRa.write(p.aeleronL);
+	LoRa.write((uint8_t)(p.motorSpeed >> 8));
+  LoRa.write((uint8_t)(p.motorSpeed));
+	LoRa.write((uint8_t)(p.aeleronR >> 8));
+  LoRa.write((uint8_t)(p.aeleronR));
+	LoRa.write((uint8_t)(p.aeleronL >> 8));
+  LoRa.write((uint8_t)(p.aeleronL));
 	return LoRa.endPacket();
+}
+
+bool LoRaRadio::sendMotorSpeed(Packet p){
+  LoRa.beginPacket();
+  LoRa.write((uint8_t)(p.motorSpeed >> 8));
+  LoRa.write((uint8_t)(p.motorSpeed));
+  Serial.println((p.motorSpeed >> 8) & 0xFF, BIN);
+  return LoRa.endPacket();
 }
 
 Packet LoRaRadio::receiveCommand(){

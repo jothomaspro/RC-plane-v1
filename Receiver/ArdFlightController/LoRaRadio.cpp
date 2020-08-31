@@ -31,7 +31,7 @@ bool LoRaRadio::sendMessage(String message){
 }
 
 bool LoRaRadio::sendCommand(Packet p){
-	byte header = (_destination << 4) + _localAddress;
+	byte header = (_destination << 4) | _localAddress;
 	LoRa.beginPacket();
 	LoRa.write(header);
 	LoRa.write(p.motorSpeed);
@@ -42,6 +42,18 @@ bool LoRaRadio::sendCommand(Packet p){
 
 Packet LoRaRadio::receiveCommand(){
   uint8_t header = LoRa.read();
+  //printHeaderCompare(header);
+  Packet p;
+  p.motorSpeed = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
+  p.aeleronR = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
+  p.aeleronL = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
+  return p;
+}
+
+void LoRaRadio::onReceive(void(*callback)(int)){
+}
+
+void LoRaRadio::printHeaderCompare(uint8_t& header){
   uint8_t sender = header & 0b00001111;
   uint8_t target = header >> 4;
   Serial.print("RSSI: ");
@@ -54,15 +66,7 @@ Packet LoRaRadio::receiveCommand(){
   Serial.print(target, HEX);
   Serial.print(" Local Address: ");
   Serial.print(this->_localAddress, HEX);
-
-  Packet p;
-  p.motorSpeed = LoRa.read();
-  p.aeleronR = LoRa.read();
-  p.aeleronL = LoRa.read();
-  return p;
-}
-
-void LoRaRadio::onReceive(void(*callback)(int)){
+  Serial.print(" ");
 }
 
 #ifdef LORAINT
