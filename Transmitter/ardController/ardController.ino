@@ -24,11 +24,13 @@ void loop() {
   currentPacket.motorSpeed = throttle.getVoltage();
   currentPacket.aeleronR = aeleron.getX();
   currentPacket.aeleronL = 300;
-  
+
+  Serial.println(difference(oldPacket, currentPacket));
   if(difference(oldPacket, currentPacket) > 5){
     Serial.println(toString(currentPacket));
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
+    Serial.println("here");
   }
   delay(500);
 }

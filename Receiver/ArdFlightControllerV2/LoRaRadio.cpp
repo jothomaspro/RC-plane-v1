@@ -6,16 +6,18 @@
  */
 
 #include "LoRaRadio.h"
+#include "Packet.h"
 
 LoRaRadio::LoRaRadio(uint8_t csPin, uint8_t rstPin, uint8_t irqPin, byte destination, byte localAddress)
-: _csPin(csPin), _rstPin(rstPin), _irqPin(irqPin), _localAddress(localAddress), _destination(destination), msgNo(0) {}
+: _csPin(csPin), _rstPin(rstPin), _irqPin(irqPin), _localAddress(localAddress), _destination(destination) {}
 
 bool LoRaRadio::begin(long freq){
   LoRa.setPins(_csPin, _rstPin, _irqPin);
   
 	if (!LoRa.begin(freq)) {             // initialize ratio at 915 MHz
 	Serial.println("LoRa init failed. Check your connections.");
-	return false;
+	while(1); //here
+  return false;
 	}
   //Serial.println("LoRa Rx online.");
 	return true;
@@ -32,25 +34,34 @@ bool LoRaRadio::sendMessage(String message){
 
 bool LoRaRadio::sendCommand(Packet p){
 	byte header = (_destination << 4) | _localAddress;
-	LoRa.beginPacket();
-	LoRa.write(header);
-	LoRa.write(p.motorSpeed);
-	LoRa.write(p.aeleronR);
-	LoRa.write(p.aeleronL);
-	return LoRa.endPacket();
+  LoRa.beginPacket();
+  LoRa.write(header);
+  LoRa.write(p.nbMsg);
+  //LoRa.write(p.t);
+  LoRa.write(p.motorSpeed);
+  LoRa.write(p.aeleronR);
+  LoRa.write(p.aeleronL);
+  return LoRa.endPacket();
 }
 
 Packet LoRaRadio::receiveCommand(){
   uint8_t header = LoRa.read();
   //printHeaderCompare(header);
   Packet p;
-  p.motorSpeed = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
+  p.nbMsg = LoRa.read();
+  p.motorSpeed = ((uint16_t)(LoRa.read()) << 8 | LoRa.read());
   p.aeleronR = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
   p.aeleronL = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
+  Serial.println(toString(p));
+  Serial.println("There");
   return p;
 }
 
 void LoRaRadio::onReceive(void(*callback)(int)){
+}
+
+int LoRaRadio::parsePacket(){
+  return LoRa.parsePacket();
 }
 
 void LoRaRadio::printHeaderCompare(uint8_t& header){

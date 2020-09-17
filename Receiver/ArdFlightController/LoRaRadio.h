@@ -27,6 +27,7 @@ private:
   uint8_t _csPin;
   uint8_t _rstPin;
   uint8_t _irqPin;
+  byte msgNo;
 };
 
 #endif

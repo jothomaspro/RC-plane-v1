@@ -9,9 +9,9 @@
 #define PACKET
 
 struct Packet{
-	uint8_t motorSpeed;
-	uint8_t aeleronR;
-	uint8_t aeleronL;
+	uint16_t motorSpeed;
+	uint16_t aeleronR;
+	uint16_t aeleronL;
 };
 
 inline bool operator!=(Packet p1, Packet p2){

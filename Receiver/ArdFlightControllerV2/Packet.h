@@ -9,15 +9,20 @@
 #define PACKET
 
 struct Packet{
+  byte nbMsg;
+  uint16_t t;
 	uint16_t motorSpeed;
 	uint16_t aeleronR;
 	uint16_t aeleronL;
-  uint16_t t;
 };
 
 inline bool operator!=(Packet p1, Packet p2){
   if((p1.motorSpeed == p2.motorSpeed) && (p1.aeleronR == p2.aeleronR) && (p1.aeleronL == p2.aeleronL)) return false;
   return true;
+}
+
+inline String toString(volatile Packet& p){
+  return (String)p.nbMsg + "," + (String)p.motorSpeed + "," + (String)p.aeleronR + "," + (String)p.aeleronL; 
 }
 
 #endif
