@@ -9,8 +9,9 @@ Servo aeleronR;
 volatile Packet command;
 volatile bool packetReceived = false;
 volatile uint16_t timeSinceLast = 0;
-uint16_t oldTime;
+uint16_t oldTime = 0;
 uint16_t newTime;
+uint16_t avgTime = 0;
 
 void setup() {
   // put your setup code here, to run once
@@ -21,25 +22,23 @@ void setup() {
   LoRa.receive();
   //LoRa.onReceive(receiveCommand);
   while(!Serial);
-  Serial.println("Motor_Speed:,AeleronR:,AeleronL:"); //,ReceiveTime:");
+  Serial.println("nbMsg:,Motor_Speed:,AeleronR:,AeleronL:,ReceiveTime:");
 }
 
 
 void loop() {
   int len = LoRa.parsePacket();
   if(len != 0){
-    Serial.println("Packet size: " + (String)len);
     receiveCommand(1);
-    writeMappedPacket(command);
+    //writeMappedPacket(command);
   }
 }
 
 void receiveCommand(int packetSize){
-  oldTime = millis();
   command = lora.receiveCommand();
-  newTime = millis();
-  //Serial.print(toString(command));
-  //printTimeDiff(oldTime, newTime);
+  Serial.print(toString(command));
+  Serial.println("," + command.t);
+  oldTime = command.t;
 }
 
 void writeMappedPacket(volatile Packet& p){
@@ -48,6 +47,6 @@ void writeMappedPacket(volatile Packet& p){
   //aeleronL.write(map(command.aeleronL, 0, 1023, 0, 180));
 }
 
-void printTimeDiff(uint16_t t1, uint16_t t2){
-  Serial.println("," +(String)(t2 - t1));
+uint16_t timeDiff(uint16_t t1, uint16_t t2){
+  return abs(t2 - t1);
 }

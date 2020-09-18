@@ -38,9 +38,12 @@ bool LoRaRadio::sendCommand(Packet p){
   LoRa.write(header);
   LoRa.write(p.nbMsg);
   //LoRa.write(p.t);
-  LoRa.write(p.motorSpeed);
-  LoRa.write(p.aeleronR);
-  LoRa.write(p.aeleronL);
+  LoRa.write((uint8_t)(p.motorSpeed>>8));
+  LoRa.write((uint8_t)(p.motorSpeed));
+  LoRa.write((uint8_t)(p.aeleronR>>8));
+  LoRa.write((uint8_t)(p.aeleronR));
+  LoRa.write((uint8_t)(p.aeleronL>>8));
+  LoRa.write((uint8_t)(p.aeleronL));
   return LoRa.endPacket();
 }
 
@@ -49,11 +52,10 @@ Packet LoRaRadio::receiveCommand(){
   //printHeaderCompare(header);
   Packet p;
   p.nbMsg = LoRa.read();
+  p.t = ((uint16_t)(LoRa.read()) << 8 | LoRa.read());
   p.motorSpeed = ((uint16_t)(LoRa.read()) << 8 | LoRa.read());
   p.aeleronR = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
   p.aeleronL = ((uint16_t)(LoRa.read() << 8) | LoRa.read());
-  Serial.println(toString(p));
-  Serial.println("There");
   return p;
 }
 

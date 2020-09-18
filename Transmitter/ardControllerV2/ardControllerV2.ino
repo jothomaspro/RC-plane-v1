@@ -35,12 +35,13 @@ void loop() {
   currentPacket.aeleronL /= FILTER;
   
   if(difference(oldPacket, currentPacket) > 8){
-    //currentPacket.t = millis();
+    currentPacket.t = millis();
     currentPacket.nbMsg = nbMsg;
     Serial.print(toString(currentPacket));
+    Serial.println("," + (String)currentPacket.t);
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
-    printTimeDiff(currentPacket.t, millis());
+    //printTimeDiff(currentPacket.t, millis());
     nbMsg++;
   }
   
