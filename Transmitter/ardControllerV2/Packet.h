@@ -10,10 +10,10 @@
 
 struct Packet{
   byte nbMsg;
-  uint16_t t;
-	uint16_t motorSpeed;
-	uint16_t aeleronR;
-	uint16_t aeleronL;
+  uint32_t t;
+  uint16_t motorSpeed;
+  uint16_t aeleronR;
+  uint16_t aeleronL;
 };
 
 inline bool operator!=(Packet p1, Packet p2){
@@ -22,7 +22,11 @@ inline bool operator!=(Packet p1, Packet p2){
 }
 
 inline String toString(volatile Packet& p){
-  return (String)p.nbMsg + "," + (String)p.motorSpeed + "," + (String)p.aeleronR + "," + (String)p.aeleronL; 
+  return (String)p.nbMsg + "," + (String)p.motorSpeed + "," + (String)p.aeleronR + "," + (String)p.aeleronL + "," + (String)p.t; 
+}
+
+inline String toDataString(volatile Packet& p){
+  return (String)p.nbMsg + "," + (String)p.motorSpeed + "," + (String)p.aeleronR + "," + (String)p.aeleronL;
 }
 
 #endif

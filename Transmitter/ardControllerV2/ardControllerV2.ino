@@ -3,6 +3,7 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 #define FILTER 40
+#define THRESHOLD 8
 
 Potentiometer throttle(A0);
 Joystick aeleron(A2, A3, 2);
@@ -20,12 +21,15 @@ void setup() {
   oldPacket.aeleronR = aeleron.getX();
   oldPacket.aeleronL = aeleron.getY();
   while(!Serial);
-  Serial.println("Motor:,Alereonr:,AeleronL:,Time:");
+  Serial.println("nbMsg:,Motor:,Alereonr:,AeleronL:,Time:");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  for(int i(0); i < FILTER; i++){
+  currentPacket.motorSpeed = throttle.getVoltage();
+  currentPacket.aeleronR = aeleron.getX();
+  currentPacket.aeleronL = aeleron.getY();
+  for(int i(1); i < FILTER; i++){
     currentPacket.motorSpeed += throttle.getVoltage();
     currentPacket.aeleronR += aeleron.getX();
     currentPacket.aeleronL += aeleron.getY();
@@ -34,20 +38,15 @@ void loop() {
   currentPacket.aeleronR /= FILTER;
   currentPacket.aeleronL /= FILTER;
   
-  if(difference(oldPacket, currentPacket) > 8){
+  if(difference(oldPacket, currentPacket) > THRESHOLD){
     currentPacket.t = millis();
     currentPacket.nbMsg = nbMsg;
-    Serial.print(toString(currentPacket));
-    Serial.println("," + (String)currentPacket.t);
+    Serial.println(toString(currentPacket));
+    //Serial.println("," + (String)currentPacket.t);
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
-    //printTimeDiff(currentPacket.t, millis());
     nbMsg++;
   }
-  
-  currentPacket.motorSpeed = 0;
-  currentPacket.aeleronR = 0;
-  currentPacket.aeleronL = 0;
 }
 
 /*void buttonIrq(){
@@ -56,6 +55,10 @@ void loop() {
 
 uint16_t difference(Packet p1, Packet p2){
   return abs(p1.motorSpeed - p2.motorSpeed) + abs(p1.aeleronR - p2.aeleronR) + abs(p1.aeleronL - p2.aeleronL);
+}
+
+uint16_t difference(uint16_t x, uint16_t y){
+  return abs(x-y);
 }
 
 void printTimeDiff(uint16_t t1, uint16_t t2){
