@@ -3,7 +3,7 @@
 #include "LoRaRadio.h"
 #include "Packet.h"
 #define FILTER 40
-#define THRESHOLD 8
+#define THRESHOLD 9
 
 Potentiometer throttle(A0);
 Joystick aeleron(A2, A3, 2);

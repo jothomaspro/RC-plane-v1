@@ -10,9 +10,9 @@ volatile Packet command;
 volatile bool packetReceived = false;
 volatile uint16_t timeSinceLast = 0;
 uint32_t oldTime = 0;
-uint32_t newTime;
+uint32_t newTime = 0;
 uint32_t avgTime = 0;
-uint16_t nbRecu =0;
+uint32_t nbRecu = 0;
 
 void setup() {
   // put your setup code here, to run once
@@ -20,7 +20,7 @@ void setup() {
   motor.attach(3);
   aeleronR.attach(5);
   lora.begin();
-  LoRa.receive();
+  //LoRa.receive();
   //LoRa.onReceive(receiveCommand);
   while(!Serial);
   Serial.println("TimeDiff:,nbMsg:,Motor_Speed:,AeleronR:,AeleronL:");
@@ -40,9 +40,10 @@ void loop() {
 
 void receiveCommand(int packetSize){
   command = lora.receiveCommand();
-  Serial.println((String)command.t + " - " + (String)oldTime);
- // Serial.println(toDataString(command));
-  appendAverage(command.t - oldTime);
+  //Serial.println((String)command.t + " - " + (String)oldTime);
+  //Serial.println(toDataString(command));
+  if(oldTime > 0) appendAverage(command.t - oldTime);
+  Serial.println(avgTime);
   oldTime = command.t;
 }
 
@@ -57,5 +58,6 @@ uint32_t timeDiff(uint32_t t1, uint32_t t2){
 }
 
 void appendAverage(uint32_t t){
-  avgTime = (avgTime*nbRecu + t)/(++nbRecu);
+  nbRecu++;
+  if(nbRecu > 0) avgTime = (avgTime*(nbRecu-1) + t)/(nbRecu);
 }
