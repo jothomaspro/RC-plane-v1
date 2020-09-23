@@ -11,9 +11,9 @@
 struct Packet{
   uint16_t nbMsg;
   uint32_t t;
-  uint16_t motorSpeed;
-  uint16_t aeleronR;
-  uint16_t aeleronL;
+	uint16_t motorSpeed;
+	uint16_t aeleronR;
+	uint16_t aeleronL;
 };
 
 inline bool operator!=(Packet p1, Packet p2){

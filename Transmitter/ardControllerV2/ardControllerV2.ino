@@ -41,8 +41,7 @@ void loop() {
   if(difference(oldPacket, currentPacket) > THRESHOLD){
     currentPacket.t = millis();
     currentPacket.nbMsg = nbMsg;
-    Serial.println(toString(currentPacket));
-    //Serial.println("," + (String)currentPacket.t);
+    Serial.println(toDataString(currentPacket));
     lora.sendCommand(currentPacket);
     oldPacket = currentPacket;
     nbMsg++;
